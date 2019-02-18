@@ -142,7 +142,6 @@
             </TitledBorder>
           </Border>
         </Property>
-        <Property name="caretPosition" type="int" value="0"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[12, 45]"/>
         </Property>

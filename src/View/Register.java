@@ -1,9 +1,15 @@
 
 package View;
 
+import Controller.SQLite;
+import java.util.ArrayList;
+import Model.User;
+
 public class Register extends javax.swing.JPanel {
 
     public Frame frame;
+    public SQLite sqlite;
+    
     
     public Register() {
         initComponents();
@@ -106,17 +112,37 @@ public class Register extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        frame.registerAction(username.getText(), password.getText(), confpass.getText());
+        //register button
+        
+        String user = username.getText();
         String pass = password.getText();
         String cPassword = confpass.getText();
+        ArrayList<User> users = frame.main.sqlite.getUsers();
+        int ctr = 0;
+
+        System.out.println("users array size: " + users.size());
         
-        System.out.print(pass + cPassword);
-        if(pass.equals(cPassword)) {
+        for(int i=0; i<users.size(); i++)
+        {
+            //if username is not unique
+            if(user.equalsIgnoreCase(users.get(i).getUsername()))
+                ctr++;
+            else 
+                System.out.println("username is: " + users.get(i).getUsername());
+        }
+        
+        System.out.println("ctr: " + ctr);
+        if(ctr==0 && pass.equals(cPassword)) //if username is unique && passwords match
+        {
+            frame.registerAction(username.getText(), password.getText(), confpass.getText());
             frame.loginNav();
         }
+        
+        System.out.println(pass + cPassword);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //back button
         frame.loginNav();
     }//GEN-LAST:event_jButton2ActionPerformed
 
