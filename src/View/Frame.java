@@ -1,9 +1,11 @@
 package View;
 
 import Controller.Main;
+import Model.User;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import javax.swing.WindowConstants;
 
 public class Frame extends javax.swing.JFrame {
@@ -212,6 +214,10 @@ public class Frame extends javax.swing.JFrame {
     private CardLayout contentView = new CardLayout();
     private CardLayout frameView = new CardLayout();
     
+    public String username;
+    public String password; 
+    public int role;
+    
     public void init(Main controller){
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setTitle("SECURDE");
@@ -237,7 +243,50 @@ public class Frame extends javax.swing.JFrame {
     }
     
     public void mainNav(){
-        frameView.show(Container, "homePnl");
+        frameView.show(Container, "homePnl"); 
+       
+        ArrayList<User> users = main.sqlite.getUsers(); 
+        for(int i=0; i<users.size(); i++)
+        {
+            if(users.get(i).getUsername().equals(username) &&
+               users.get(i).getPassword().equals(password) && 
+               users.get(i).getRole() == role)
+            {
+                switch(users.get(i).getRole())
+                {
+                    case 1: //disabled
+                            break;
+                    case 2: //client
+                            contentView.show(Content, "clientHomePnl");
+                            adminBtn.setEnabled(false);
+                            managerBtn.setEnabled(false);
+                            staffBtn.setEnabled(false);
+                            clientBtn.setEnabled(true);
+                            break;
+                    case 3: //staff
+                            contentView.show(Content, "staffHomePnl");
+                            adminBtn.setEnabled(false);
+                            managerBtn.setEnabled(false);
+                            staffBtn.setEnabled(true);
+                            clientBtn.setEnabled(false);
+                            break;
+                    case 4: //manager
+                            contentView.show(Content, "managerHomePnl");
+                            adminBtn.setEnabled(false);
+                            managerBtn.setEnabled(true);
+                            staffBtn.setEnabled(false);
+                            clientBtn.setEnabled(false);
+                            break;
+                    case 5: //admin
+                            contentView.show(Content, "adminHomePnl");
+                            adminBtn.setEnabled(true);
+                            managerBtn.setEnabled(false);
+                            staffBtn.setEnabled(false);
+                            clientBtn.setEnabled(false);
+                            break;
+                }
+            }
+        }
     }
     
     public void loginNav(){
@@ -249,7 +298,14 @@ public class Frame extends javax.swing.JFrame {
     }
     
     public void registerAction(String username, String password, String confpass){
-        main.sqlite.addUser(username, password);
+        main.sqlite.addUser(username, password, 2);
+    }
+    
+    public void setCurrUser(String username, String password, int role)
+    {
+        this.username = username; 
+        this.password = password;
+        this.role = role;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Login extends javax.swing.JPanel {
     
     public Frame frame;
-    
+    public boolean loggedIn = false;
     public Login() {
         initComponents();
     }
@@ -109,6 +109,8 @@ public class Login extends javax.swing.JPanel {
         ArrayList<User> users = frame.main.sqlite.getUsers();
         for(int nCtr = 0; nCtr < users.size(); nCtr++){
             if(username.equals(users.get(nCtr).getUsername()) && password.equals(users.get(nCtr).getPassword())){
+                loggedIn = true;
+                frame.setCurrUser(users.get(nCtr).getUsername(), users.get(nCtr).getPassword(), users.get(nCtr).getRole());
                 frame.mainNav();
             }
         }

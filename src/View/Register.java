@@ -10,7 +10,6 @@ public class Register extends javax.swing.JPanel {
     public Frame frame;
     public SQLite sqlite;
     
-    
     public Register() {
         initComponents();
     }
@@ -113,7 +112,6 @@ public class Register extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //register button
-        
         String user = username.getText();
         String pass = password.getText();
         String cPassword = confpass.getText();
@@ -137,7 +135,6 @@ public class Register extends javax.swing.JPanel {
             frame.registerAction(username.getText(), password.getText(), confpass.getText());
             frame.loginNav();
         }
-        
         System.out.println(pass + cPassword);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -145,7 +142,6 @@ public class Register extends javax.swing.JPanel {
         //back button
         frame.loginNav();
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField confpass;
