@@ -1,6 +1,9 @@
 
 package View;
 
+import Model.User;
+import java.util.ArrayList;
+
 public class Login extends javax.swing.JPanel {
     
     public Frame frame;
@@ -100,10 +103,16 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String test = jTextField1.getText();
-        String test2 = jPasswordField1.getText();
-        System.out.println(test2);
-        frame.mainNav();
+        String username = jTextField1.getText();
+        String password = jPasswordField1.getText();
+        
+        ArrayList<User> users = frame.main.sqlite.getUsers();
+        for(int nCtr = 0; nCtr < users.size(); nCtr++){
+            if(username.equals(users.get(nCtr).getUsername()) && password.equals(users.get(nCtr).getPassword())){
+                frame.mainNav();
+            }
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
