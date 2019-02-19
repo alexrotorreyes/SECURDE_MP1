@@ -116,7 +116,7 @@ public class Login extends javax.swing.JPanel {
         }
         jTextField1.setText("");
         jPasswordField1.setText("");
-        
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
