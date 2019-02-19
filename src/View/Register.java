@@ -24,7 +24,6 @@ public class Register extends javax.swing.JPanel {
         confpass = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -74,8 +73,6 @@ public class Register extends javax.swing.JPanel {
 
         jLabel3.setForeground(new java.awt.Color(255, 0, 51));
 
-        jLabel4.setForeground(new java.awt.Color(255, 0, 51));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,16 +93,14 @@ public class Register extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(296, 296, 296))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(291, 291, 291))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(298, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(274, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(208, 208, 208))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,9 +119,7 @@ public class Register extends javax.swing.JPanel {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(confpass, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(28, 28, 28)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
         );
@@ -151,23 +144,36 @@ public class Register extends javax.swing.JPanel {
                 jLabel2.setText("User already exists");
             }
             else if(user.equalsIgnoreCase("")){
+                //if empty
                 jLabel2.setText("Please input username ");
             }
-            else 
+            else    //if unique
                 System.out.println("username is: " + users.get(i).getUsername());
         }
         
         System.out.println("ctr: " + ctr);
-        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals(""))) //if username is unique && passwords match
+        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals(""))) 
         {
+            //if username is unique && passwords match && passwords not empty
             String generatedSecuredPasswordHash = Controller.BCrypt.hashpw(pass, Controller.BCrypt.gensalt(12));
             System.out.println(generatedSecuredPasswordHash);
             frame.registerAction(username.getText(), generatedSecuredPasswordHash, confpass.getText());
             frame.loginNav();
         }
-        else{
-            jLabel3.setText("Passwords do not match");
-            jLabel4.setText("Passwords do not match");
+        else if (ctr==0 && !pass.equals(cPassword) && (pass.equals("") || cPassword.equals(""))) 
+        {
+            //if username is unique && passwords DON'T match && either pass or cPassword is blank 
+            jLabel3.setText("Passwords do not match AND password field is empty");
+        }
+        else if(ctr==0 && !pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals("")))
+        {
+            //if username is unique && passwords DON'T match && password fields are NOT empty
+            jLabel3.setText("Passwords do not match! Try again.");
+        }
+        else if(ctr==0 && (pass.equals("") || cPassword.equals("")))
+        {
+            //if username is unique && passwords match && password fields are BLANK
+            jLabel3.setText("Password field is empty.");
         }
         
         //System.out.println(pass + cPassword);
@@ -182,6 +188,8 @@ public class Register extends javax.swing.JPanel {
        username.setText("");
        password.setText("");
        confpass.setText("");
+       jLabel2.setText("");
+       jLabel3.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -191,7 +199,6 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
