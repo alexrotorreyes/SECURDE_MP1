@@ -114,6 +114,8 @@ public class Login extends javax.swing.JPanel {
                 frame.mainNav();
             }
         }
+        jTextField1.setText("");
+        jPasswordField1.setText("");
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

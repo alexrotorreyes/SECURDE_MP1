@@ -298,7 +298,7 @@ public class Frame extends javax.swing.JFrame {
     }
     
     public void registerAction(String username, String password, String confpass){
-        main.sqlite.addUser(username, password, 2);
+        main.sqlite.addUser(username, password);
     }
     
     public void setCurrUser(String username, String password, int role)
