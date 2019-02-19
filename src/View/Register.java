@@ -159,6 +159,8 @@ public class Register extends javax.swing.JPanel {
             System.out.println(generatedSecuredPasswordHash);
             frame.registerAction(username.getText(), generatedSecuredPasswordHash, confpass.getText());
             frame.loginNav();
+            jLabel2.setText("");
+            jLabel3.setText("");
         }
         else if (ctr==0 && !pass.equals(cPassword) && (pass.equals("") || cPassword.equals(""))) 
         {
