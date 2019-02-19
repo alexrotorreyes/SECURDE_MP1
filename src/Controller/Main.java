@@ -29,11 +29,12 @@ public class Main {
         sqlite.createUserTable();
         
         // Add users
-        sqlite.addUser("admin", "qwerty1234" , 5);
-        sqlite.addUser("manager", "qwerty1234", 4);
-        sqlite.addUser("staff", "qwerty1234", 3);
-        sqlite.addUser("client1", "qwerty1234", 2);
-        sqlite.addUser("client2", "qwerty1234", 2);
+        
+        sqlite.addUser("admin", Controller.BCrypt.hashpw("qwerty1234", Controller.BCrypt.gensalt(12)) , 5);
+        sqlite.addUser("manager", Controller.BCrypt.hashpw("qwerty1234", Controller.BCrypt.gensalt(12)), 4);
+        sqlite.addUser("staff", Controller.BCrypt.hashpw("qwerty1234", Controller.BCrypt.gensalt(12)), 3);
+        sqlite.addUser("client1", Controller.BCrypt.hashpw("qwerty1234", Controller.BCrypt.gensalt(12)), 2);
+        sqlite.addUser("client2", Controller.BCrypt.hashpw("qwerty1234", Controller.BCrypt.gensalt(12)), 2);
         
         // Get users
         ArrayList<User> users = sqlite.getUsers();
