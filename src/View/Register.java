@@ -70,8 +70,10 @@ public class Register extends javax.swing.JPanel {
         confpass.setPreferredSize(new java.awt.Dimension(12, 45));
 
         jLabel2.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabel3.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -138,6 +140,9 @@ public class Register extends javax.swing.JPanel {
         
         for(int i=0; i<users.size(); i++)
         {
+            if(user.contains(" ")){
+                jLabel2.setText("You can't have a space for your username");
+            }
             //if username is not unique
             if(user.equalsIgnoreCase(users.get(i).getUsername())){
                 ctr++;
@@ -152,7 +157,7 @@ public class Register extends javax.swing.JPanel {
         }
         
         System.out.println("ctr: " + ctr);
-        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals(""))) 
+        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals("")) && (!pass.contains(" "))) 
         {
             //if username is unique && passwords match && passwords not empty
             String generatedSecuredPasswordHash = Controller.BCrypt.hashpw(pass, Controller.BCrypt.gensalt(12));
@@ -176,6 +181,9 @@ public class Register extends javax.swing.JPanel {
         {
             //if username is unique && passwords match && password fields are BLANK
             jLabel3.setText("Password field is empty.");
+        }
+        else if(pass.contains(" ") || cPassword.contains(" ")){
+            jLabel3.setText("You can't use a space for your password");
         }
         
         //System.out.println(pass + cPassword);

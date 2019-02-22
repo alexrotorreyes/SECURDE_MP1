@@ -22,7 +22,6 @@ public class Login extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
@@ -70,8 +69,6 @@ public class Login extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setForeground(new java.awt.Color(255, 0, 51));
-
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -91,24 +88,17 @@ public class Login extends javax.swing.JPanel {
                 .addGap(200, 200, 200))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(301, 301, 301))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(312, 312, 312))))
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(237, 237, 237))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(65, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addGap(68, 68, 68)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,22 +118,23 @@ public class Login extends javax.swing.JPanel {
         ArrayList<User> users = frame.main.sqlite.getUsers();
         for(int nCtr = 0; nCtr < users.size(); nCtr++){
             if(username.equals(users.get(nCtr).getUsername())){ //CHECKS USERNAME
+                jLabel3.setText("");
                 if(BCrypt.checkpw(password, users.get(nCtr).getPassword())){ // PASSWORD HASHED AND ORIG PASSWORD
 //                    System.out.println(password);
 //                    System.out.println(generatedSecuredPasswordHash);
                     loggedIn = true;
                     frame.setCurrUser(users.get(nCtr).getUsername(), users.get(nCtr).getPassword(), users.get(nCtr).getRole());
                     jLabel3.setText("");
-                    jLabel2.setText("");
                     frame.mainNav();
                     nCtr = users.size() + 1;
                 }
                 else{
-                    jLabel3.setText("Password is wrong");
+                    jLabel3.setText("Login failed: Invalid username or password");
+                    nCtr = users.size() +1;
                 }
             }
             else if(!username.equals(users.get(nCtr).getUsername())){
-                jLabel2.setText("Username is wrong");
+                jLabel3.setText("Login failed: Invalid username or password");
             }
         }
         jTextField1.setText("");
@@ -153,6 +144,9 @@ public class Login extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         frame.registerNav();
+        jLabel3.setText("");
+        jTextField1.setText("");
+        jPasswordField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
@@ -168,7 +162,6 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
