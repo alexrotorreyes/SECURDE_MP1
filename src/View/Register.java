@@ -4,6 +4,7 @@ package View;
 import Controller.SQLite;
 import java.util.ArrayList;
 import Model.User;
+import static java.lang.Character.isUpperCase;
 
 public class Register extends javax.swing.JPanel {
 
@@ -157,8 +158,9 @@ public class Register extends javax.swing.JPanel {
         }
         
         System.out.println("ctr: " + ctr);
-        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals("")) && (!pass.contains(" "))) 
+        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals("")) && (!pass.contains(" ")) && pass.length()>7) 
         {
+            System.out.println(pass.length());
             //if username is unique && passwords match && passwords not empty
             String generatedSecuredPasswordHash = Controller.BCrypt.hashpw(pass, Controller.BCrypt.gensalt(12));
             System.out.println(generatedSecuredPasswordHash);
@@ -185,6 +187,16 @@ public class Register extends javax.swing.JPanel {
         else if(pass.contains(" ") || cPassword.contains(" ")){
             jLabel3.setText("You can't use a space for your password");
         }
+        else if(pass.length() < 7 || cPassword.length() < 7){
+            jLabel3.setText("Your password should be 8 characters long");
+        }
+        
+        //to check if it has uppercase
+        for(int i = 0; i < pass.length(); i++){
+            if(isUpperCase(password.getText().charAt(i))){
+                System.out.println("UPPER");
+            } 
+        }   
         
         //System.out.println(pass + cPassword);
        username.setText("");
