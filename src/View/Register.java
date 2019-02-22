@@ -5,9 +5,36 @@ import Controller.SQLite;
 import java.util.ArrayList;
 import Model.User;
 import static java.lang.Character.isUpperCase;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Register extends javax.swing.JPanel {
+    public boolean Password_Validation(String s) {
+        //to check if it has uppercase
+        boolean upper = false;
+        for(int i = 0; i < s.length(); i++){
+            if(isUpperCase(password.getText().charAt(i))){
+                upper = true;
+                } 
+            }  
 
+         if (s == null || s.trim().isEmpty()) {
+             System.out.println("Incorrect format of string");
+             return false;
+         }
+         Pattern p = Pattern.compile("[^A-Za-z0-9]");
+         Matcher m = p.matcher(s);
+         boolean b = m.find();
+         if (b && upper){
+            System.out.println("There is a special character in my string & 8 characters long");
+            return true;
+         }
+         else{
+            System.out.println("There is no special char.");
+            return false;
+         }
+    }
+    
     public Frame frame;
     public SQLite sqlite;
     public Register() {
@@ -84,8 +111,12 @@ public class Register extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(298, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(274, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(193, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                     .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -94,16 +125,12 @@ public class Register extends javax.swing.JPanel {
                 .addGap(165, 165, 165))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(296, 296, 296))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(298, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(208, 208, 208))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(245, 245, 245))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +185,7 @@ public class Register extends javax.swing.JPanel {
         }
         
         System.out.println("ctr: " + ctr);
-        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals("")) && (!pass.contains(" ")) && pass.length()>7) 
+        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals("")) && (!pass.contains(" ")) && pass.length()>7 && Password_Validation(pass)) 
         {
             System.out.println(pass.length());
             //if username is unique && passwords match && passwords not empty
@@ -187,16 +214,11 @@ public class Register extends javax.swing.JPanel {
         else if(pass.contains(" ") || cPassword.contains(" ")){
             jLabel3.setText("You can't use a space for your password");
         }
-        else if(pass.length() < 7 || cPassword.length() < 7){
-            jLabel3.setText("Your password should be 8 characters long");
+        else if(!(Password_Validation(pass))){
+            jLabel3.setText("Your password should be 8 characters long and contains special characters and uppercase letters");
         }
         
-        //to check if it has uppercase
-        for(int i = 0; i < pass.length(); i++){
-            if(isUpperCase(password.getText().charAt(i))){
-                System.out.println("UPPER");
-            } 
-        }   
+         
         
         //System.out.println(pass + cPassword);
        username.setText("");

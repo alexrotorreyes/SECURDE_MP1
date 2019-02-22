@@ -21,8 +21,13 @@
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace pref="298" max="32767" attributes="0"/>
+              <Component id="jButton1" min="-2" pref="220" max="-2" attributes="0"/>
+              <EmptySpace pref="274" max="32767" attributes="0"/>
+          </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="193" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="jLabel1" pref="434" max="32767" attributes="0"/>
                   <Component id="password" max="32767" attributes="0"/>
@@ -33,18 +38,13 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel2" min="-2" pref="165" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="296" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace pref="298" max="32767" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="220" max="-2" attributes="0"/>
-              <EmptySpace pref="274" max="32767" attributes="0"/>
+              <Component id="jLabel3" min="-2" pref="619" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel3" min="-2" pref="348" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="208" max="-2" attributes="0"/>
+              <Component id="jLabel2" min="-2" pref="260" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
