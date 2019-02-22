@@ -17,7 +17,7 @@ public class Register extends javax.swing.JPanel {
                 upper = true;
                 } 
             }  
-
+        
          if (s == null || s.trim().isEmpty()) {
              System.out.println("Incorrect format of string");
              return false;

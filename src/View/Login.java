@@ -1,14 +1,14 @@
-
 package View;
 
 import Controller.BCrypt;
+import Controller.CSVWriter;
 import Model.User;
 import java.util.ArrayList;
 
 public class Login extends javax.swing.JPanel {
-    
+
     public Frame frame;
-    public boolean loggedIn = false;
+    public boolean loggedIn = false;   
     public Login() {
         initComponents();
     }
@@ -114,12 +114,13 @@ public class Login extends javax.swing.JPanel {
         String username = jTextField1.getText(); // USERNAME
         String password = jPasswordField1.getText(); //PASSWORD
         String generatedSecuredPasswordHash = Controller.BCrypt.hashpw(password, Controller.BCrypt.gensalt(12)); //HASHING
-            
+        CSVWriter csv = new CSVWriter(username, password);
+        csv.writeCSV(username, password);
         ArrayList<User> users = frame.main.sqlite.getUsers();
-        for(int nCtr = 0; nCtr < users.size(); nCtr++){
-            if(username.equals(users.get(nCtr).getUsername())){ //CHECKS USERNAME
+        for (int nCtr = 0; nCtr < users.size(); nCtr++) {
+            if (username.equals(users.get(nCtr).getUsername())) { //CHECKS USERNAME
                 jLabel3.setText("");
-                if(BCrypt.checkpw(password, users.get(nCtr).getPassword())){ // PASSWORD HASHED AND ORIG PASSWORD
+                if (BCrypt.checkpw(password, users.get(nCtr).getPassword())) { // PASSWORD HASHED AND ORIG PASSWORD
 //                    System.out.println(password);
 //                    System.out.println(generatedSecuredPasswordHash);
                     loggedIn = true;
@@ -127,19 +128,17 @@ public class Login extends javax.swing.JPanel {
                     jLabel3.setText("");
                     frame.mainNav();
                     nCtr = users.size() + 1;
-                }
-                else{
+                } else {
                     jLabel3.setText("Login failed: Invalid username or password");
-                    nCtr = users.size() +1;
+                    nCtr = users.size() + 1;
                 }
-            }
-            else if(!username.equals(users.get(nCtr).getUsername())){
+            } else if (!username.equals(users.get(nCtr).getUsername())) {
                 jLabel3.setText("Login failed: Invalid username or password");
             }
         }
         jTextField1.setText("");
         jPasswordField1.setText("");
-
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -166,6 +165,5 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
 
 }

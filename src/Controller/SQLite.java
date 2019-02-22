@@ -24,7 +24,7 @@ public class SQLite {
     public void createUserTable() {
         String sql = "CREATE TABLE IF NOT EXISTS users (\n"
             + " id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-            + " username TEXT NOT NULL,\n"
+            + " username TEXT NOT NULL UNIQUE,\n"
             + " password TEXT NOT NULL,\n"
             + " role INTEGER DEFAULT 2\n"
             + ");";
