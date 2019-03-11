@@ -32,7 +32,7 @@ public class CSVWriter extends User{
     }
     
     public void writeCSV(String username,String password){
-    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy, HH:mm:ss");  
     Date date = new Date();  
     System.out.println();  
         FileWriter fileWriter = null;

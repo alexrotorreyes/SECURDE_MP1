@@ -3,10 +3,13 @@ package View;
 import Controller.BCrypt;
 import Controller.CSVWriter;
 import Model.User;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.Timer;
 
 public class Login extends javax.swing.JPanel {
-
+    int attempts = 0;
+    int delay = 5000;
     public Frame frame;
     public boolean loggedIn = false;   
     public Login() {
@@ -70,14 +73,16 @@ public class Login extends javax.swing.JPanel {
         });
 
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(200, 200, 200)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPasswordField1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -86,10 +91,6 @@ public class Login extends javax.swing.JPanel {
                     .addComponent(jTextField1)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(200, 200, 200))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(237, 237, 237))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,6 +112,16 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        Timer timer = new Timer(delay, new ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton2.setEnabled(true);
+        jButton1.setEnabled(true);
+        jTextField1.setEnabled(true);
+        jPasswordField1.setEnabled(true);
+    }
+});
+        timer.setRepeats(false);
         String username = jTextField1.getText(); // USERNAME
         String password = jPasswordField1.getText(); //PASSWORD
         String generatedSecuredPasswordHash = Controller.BCrypt.hashpw(password, Controller.BCrypt.gensalt(12)); //HASHING
@@ -128,16 +139,31 @@ public class Login extends javax.swing.JPanel {
                     jLabel3.setText("");
                     frame.mainNav();
                     nCtr = users.size() + 1;
+                    attempts = 0;
                 } else {
                     jLabel3.setText("Login failed: Invalid username or password");
                     nCtr = users.size() + 1;
+                        attempts++;
                 }
-            } else if (!username.equals(users.get(nCtr).getUsername())) {
+            }
+            else if (!username.equals(users.get(nCtr).getUsername())) {
                 jLabel3.setText("Login failed: Invalid username or password");
             }
+            if(attempts == 5){
+                jLabel3.setText("Attempts have already exceeded. You have to wait " + delay/1000 + " seconds");
+                delay = delay * 2;
+                jButton2.setEnabled(false);
+                jButton1.setEnabled(false);
+                jTextField1.setEnabled(false);
+                jPasswordField1.setEnabled(false);
+                timer.start();
+                attempts = 0;
+            }
         }
+        
         jTextField1.setText("");
         jPasswordField1.setText("");
+        System.out.println(attempts);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
