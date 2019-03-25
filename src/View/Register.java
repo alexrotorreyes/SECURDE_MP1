@@ -22,15 +22,25 @@ public class Register extends javax.swing.JPanel {
              System.out.println("Incorrect format of string");
              return false;
          }
-         Pattern p = Pattern.compile("[^A-Za-z0-9]");
+         Pattern p = Pattern.compile("[^A-Za-z0-9]"); //symbols
          Matcher m = p.matcher(s);
-         boolean b = m.find();
-         if (b && upper){
-            System.out.println("There is a special character in my string & 8 characters long");
+         boolean symbols = m.find();      
+         
+         Pattern p1 = Pattern.compile("[0-9]"); //numbers
+         Matcher m1 = p1.matcher(s);
+         boolean numbers = m1.find();
+         
+         Pattern p2 = Pattern.compile("[a-z]"); //lowercase
+         Matcher m2 = p2.matcher(s);
+         boolean lower = m2.find();
+         
+         if (symbols && numbers && lower && upper && s.length()>= 8){
+            System.out.println("There is a special character, number, lowercase and uppercase in my string & 8 characters long");
+            System.out.println(s);
             return true;
          }
          else{
-            System.out.println("There is no special char.");
+            System.out.println("Invalid password");
             return false;
          }
     }
@@ -125,12 +135,12 @@ public class Register extends javax.swing.JPanel {
                 .addGap(165, 165, 165))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(245, 245, 245))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +195,7 @@ public class Register extends javax.swing.JPanel {
         }
         
         System.out.println("ctr: " + ctr);
-        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals("")) && (!pass.contains(" ")) && pass.length()>7 && Password_Validation(pass)) 
+        if(ctr==0 && pass.equals(cPassword) && (!pass.equals("")) && (!cPassword.equals("")) && (!pass.contains(" ")) && Password_Validation(pass)) 
         {
             System.out.println(pass.length());
             //if username is unique && passwords match && passwords not empty
@@ -215,7 +225,7 @@ public class Register extends javax.swing.JPanel {
             jLabel3.setText("You can't use a space for your password");
         }
         else if(!(Password_Validation(pass))){
-            jLabel3.setText("Your password should be 8 characters long and contains special characters and uppercase letters");
+            jLabel3.setText("Password should contain special characters, numbers, upper and lowercase letters and be 8 characters long");
         }
         
          

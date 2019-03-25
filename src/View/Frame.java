@@ -299,14 +299,6 @@ public class Frame extends javax.swing.JFrame {
     
     public void registerAction(String username, String password, String confpass){
         main.sqlite.addUser(username, password);
-//         ArrayList<User> users = main.sqlite.getUsers();
-//        for(int nCtr = 0; nCtr < users.size(); nCtr++){
-//            System.out.println("===== User " + users.get(nCtr).getId() + " =====");
-//            System.out.println(" Username: " + users.get(nCtr).getUsername());
-//            System.out.println(" Password: " + users.get(nCtr).getPassword());
-//            System.out.println(" Role: " + users.get(nCtr).getRole());
-//        }
-
     }
     
     public void setCurrUser(String username, String password, int role)
